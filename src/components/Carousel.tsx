@@ -17,8 +17,6 @@ function Carousel() {
     >
       <Swiper
         loop={true}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
         modules={[Navigation, Pagination, Autoplay]}
         navigation
         pagination={{ clickable: true }}

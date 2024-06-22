@@ -37,8 +37,6 @@ function PaintingSlider() {
         <Swiper
           spaceBetween={0}
           slidesPerView={3}
-          onSlideChange={() => console.log("slide change")}
-          onSwiper={(swiper) => console.log(swiper)}
           modules={[Navigation, Pagination]}
           navigation
           pagination={{ clickable: true }}

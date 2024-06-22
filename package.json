@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@iconify-json/simple-icons": "^1.1.106",
+    "@types/youtube": "^0.0.50",
     "dayjs": "^1.11.11",
     "microcms-js-sdk": "^3.1.1",
     "next": "14.2.4",

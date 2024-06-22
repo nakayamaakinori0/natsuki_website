@@ -7,6 +7,7 @@ import dayjs from "@/libs/day";
 
 function NewsList() {
   const [newsList, setNewsList] = useState<any[]>([]);
+
   useEffect(() => {
     const func = async () => {
       const res = await client.get({ endpoint: "news_list" });
@@ -14,6 +15,7 @@ function NewsList() {
     };
     func();
   }, []);
+
   if (!newsList) return null;
   return (
     <div>
