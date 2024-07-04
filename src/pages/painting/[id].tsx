@@ -15,7 +15,7 @@ function Painting() {
       setPainting(data);
     };
     if (paintingId) func();
-  }, []);
+  }, [paintingId]);
 
   if (!painting) return null;
 

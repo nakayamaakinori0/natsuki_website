@@ -5,11 +5,16 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Image from "next/image";
-import { GetRequestOptions, PaintingList } from "@/type";
+import {
+  GetRequestOptions,
+  PaintingList,
+  PlaylistItem,
+  PaintingType,
+} from "@/type";
 
 function Gallery() {
-  const [movieList, setMovieList] = useState<any[]>([]);
-  const [paintingList, setPaintingList] = useState<any[]>([]);
+  const [movieList, setMovieList] = useState<PlaylistItem[]>([]);
+  const [paintingList, setPaintingList] = useState<PaintingType[]>([]);
 
   useEffect(() => {
     const func = async () => {
@@ -34,13 +39,15 @@ function Gallery() {
     func();
   }, []);
 
+  if (!movieList || !paintingList) return <div>Loading...</div>;
+
   return (
     <div>
       <h1 className="text-4xl mt-6 border-b-2">Painting</h1>
       <div className="grid grid-cols-3 gap-4">
         {paintingList.map((painting) => {
           return (
-            <div>
+            <div key={painting.id}>
               <div>
                 <Link href={`/painting/${painting.id}`}>
                   <Image
@@ -65,7 +72,7 @@ function Gallery() {
       <div className="grid grid-cols-3 gap-4">
         {movieList.map((movie) => {
           return (
-            <div>
+            <div key={movie.id}>
               <div>
                 <Link href={`/movie/${movie.contentDetails.videoId}`}>
                   <Image

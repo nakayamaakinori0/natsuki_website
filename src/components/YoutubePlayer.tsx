@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+
+declare global {
+  interface Window {
+    onYouTubeIframeAPIReady: (() => void) | undefined | null;
+  }
+}
 
 type Props = { movieId: string };
 
@@ -32,7 +38,7 @@ function YoutubePlayer({ movieId }: Props) {
     };
   })();
 
-  const loadYoutubeAPI = () => {
+  const loadYoutubeAPI = useCallback(() => {
     // movieページ内で他のメタに遷移した時はプレイヤーを再生成する(iFrameAPIがロード済みの時)
     if (window.YT) {
       playerRef.current = new YT.Player("player", playerOptions);
@@ -48,16 +54,16 @@ function YoutubePlayer({ movieId }: Props) {
         playerRef.current = new YT.Player("player", playerOptions);
       };
     }
-  };
+  }, [playerOptions, playerRef]);
 
-  const initializePlayer = () => {
+  const initializePlayer = useCallback(() => {
     if (playerRef.current) {
       playerRef.current.destroy();
       window.onYouTubeIframeAPIReady = null;
       playerRef.current = null;
     }
     loadYoutubeAPI();
-  };
+  }, [loadYoutubeAPI, playerRef]);
 
   const calculatePlayerSize = () => {
     const newWidth = window.innerWidth < 1100 ? window.innerWidth : 1100;
@@ -70,7 +76,7 @@ function YoutubePlayer({ movieId }: Props) {
     if (movieId && window) {
       initializePlayer();
     }
-  }, [movieId]);
+  }, [movieId, initializePlayer]);
 
   //  calculate player size
   useEffect(() => {
