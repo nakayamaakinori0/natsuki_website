@@ -1,30 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { client } from "@/libs/client";
 import { NextRouter, useRouter } from "next/router";
+import { News } from "@/type";
 import Image from "next/image";
-
-type News = {
-  title: string;
-  body: string;
-  head_image: {
-    url: string;
-  };
-};
 
 function NewsDetail() {
   const [news, setNews] = useState<News>();
   const router: NextRouter = useRouter();
-  const newsId: string | undefined =
-    typeof router.query.id !== "string" ? undefined : router.query.id;
+  const newsId: string = router.query.id as string;
 
   useEffect(() => {
     const func = async () => {
-      const res = await client.get({
-        endpoint: "news_list",
-        contentId: newsId,
-        queries: { draftKey: "", fields: "", depth: 1 },
-      });
-      setNews(res);
+      const res = await fetch(`/api/news/${newsId}`);
+      const data: News = await res.json();
+      setNews(data);
     };
     if (newsId) func();
   }, [newsId]);
@@ -39,8 +27,12 @@ function NewsDetail() {
         height={400}
         alt={"news"}
       ></Image>
-      <h1>{news.title}</h1>
-      <p>{news.body}</p>
+      <h1 className="text-4xl mt-6 border-b-2">{news.title}</h1>
+      <h2>{news.caption}</h2>
+      <article
+        className="prose prose-invert mt-6"
+        dangerouslySetInnerHTML={{ __html: news.body }}
+      ></article>
     </div>
   );
 }

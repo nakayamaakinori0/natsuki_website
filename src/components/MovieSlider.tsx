@@ -18,15 +18,8 @@ function MovieSlider() {
       redirect: "follow",
     };
 
-    const youtubeURL = process.env.NEXT_PUBLIC_YOUTUBE_URL;
-    const youtubeAPIKey = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
-    const youtubePlaylistID = process.env.NEXT_PUBLIC_PLAYLIST_ID;
-
     const func = async () => {
-      const res = await fetch(
-        `${youtubeURL}/playlistItems?part=contentDetails,id,snippet,status&playlistId=${youtubePlaylistID}&key=${youtubeAPIKey}&maxResults=10`,
-        requestOptions
-      );
+      const res = await fetch(`/api/movie/list`, requestOptions);
       const data = await res.json();
       setMovieList(data.items);
     };
@@ -45,11 +38,17 @@ function MovieSlider() {
             [&_.swiper-pagination-bullet-active]:!bg-secondary"
       >
         <Swiper
-          spaceBetween={30}
-          slidesPerView={3}
+          spaceBetween={15}
+          slidesPerView={2}
           modules={[Navigation, Pagination]}
           navigation
           pagination={{ clickable: true }}
+          breakpoints={{
+            500: { slidesPerView: 3 },
+            800: { slidesPerView: 4 },
+            1100: { slidesPerView: 5 },
+            1400: { slidesPerView: 5 },
+          }}
         >
           {movieList.map((movie) => {
             return (
@@ -58,8 +57,8 @@ function MovieSlider() {
                   <Image
                     className=""
                     src={movie.snippet.thumbnails.standard.url}
-                    width={640}
-                    height={480}
+                    width={320}
+                    height={180}
                     alt="movie"
                   ></Image>
                 </Link>

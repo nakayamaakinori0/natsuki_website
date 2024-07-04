@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import React from "react";
-import { client } from "@/libs/client";
 import Link from "next/link";
 import Image from "next/image";
 import dayjs from "@/libs/day";
+import { NewsListType } from "@/type";
 
 function NewsList() {
   const [newsList, setNewsList] = useState<any[]>([]);
 
   useEffect(() => {
     const func = async () => {
-      const res = await client.get({ endpoint: "news_list" });
-      setNewsList(res?.contents);
+      const res = await fetch("/api/news/list");
+      const data: NewsListType = await res.json();
+      setNewsList(data?.contents);
     };
     func();
   }, []);
@@ -29,21 +30,11 @@ function NewsList() {
               <Link href={`/news/${content.id}`}>
                 <h2 className="text-xl">{content.title}</h2>
               </Link>
-              {content?.start_date &&
-                content?.end_date &&
-                dayjs(content.start_date).isSame(dayjs(content.end_date)) && (
-                  <div className="test-xs">
-                    {dayjs(content.start_date).format("YYYY/MM/DD")}
-                  </div>
-                )}
-              {content?.start_date &&
-                content?.end_date &&
-                !dayjs(content.start_date).isSame(dayjs(content.end_date)) && (
-                  <div className="text-xs">
-                    {dayjs(content.start_date).format("YYYY/MM/DD")}-
-                    {dayjs(content.end_date).format("YYYY/MM/DD")}
-                  </div>
-                )}
+              {content?.createdAt && (
+                <div className="test-xs">
+                  {dayjs(content.createdAt).format("YYYY/MM/DD")}
+                </div>
+              )}
 
               {content?.head_image?.url && (
                 <Link href={`/news/${content.id}`}>
@@ -56,12 +47,12 @@ function NewsList() {
                   ></Image>
                 </Link>
               )}
-              {content?.body && (
+              {content?.caption && (
                 <Link href={`/news/${content.id}`}>
                   <div className="mt-2">
-                    {content?.body.length > 70
-                      ? `${content.body.substring(0, 70)}.....`
-                      : content.body}
+                    {content?.caption.length > 70
+                      ? `${content.caption.substring(0, 70)}.....`
+                      : content.caption}
                   </div>
                 </Link>
               )}

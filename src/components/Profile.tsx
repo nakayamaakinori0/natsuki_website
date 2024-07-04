@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { client } from "@/libs/client";
+import { ProfileType } from "@/type";
 
 function Profile() {
   const [profile, setProfile] = useState<any>({});
   useEffect(() => {
     const func = async () => {
-      const res = await client.get({ endpoint: "profile" });
-      setProfile(res);
+      const res = await fetch("/api/profile");
+      const data: ProfileType = await res.json();
+      setProfile(data);
     };
     func();
   }, []);
@@ -17,7 +18,7 @@ function Profile() {
     <div>
       <h1 className="text-4xl mt-6 border-b-2">Profile</h1>
       <div
-        className="mt-4 [&>h1]:text-2xl [&>h2]:text-xl"
+        className="prose prose-invert "
         dangerouslySetInnerHTML={{ __html: profile.detail }}
       ></div>
     </div>

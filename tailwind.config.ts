@@ -20,6 +20,7 @@ const config: Config = {
     iconsPlugin({
       collections: getIconCollections(["simple-icons"]),
     }),
+    require("@tailwindcss/typography"),
   ],
 };
 export default config;

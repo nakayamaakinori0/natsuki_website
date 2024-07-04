@@ -1,27 +1,12 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { client } from "@/libs/client";
+import React from "react";
+import Profile from "@/components/Profile";
 
-function Profile() {
-  const [profile, setProfile] = useState<any>({});
-  useEffect(() => {
-    const func = async () => {
-      const res = await client.get({ endpoint: "profile" });
-      setProfile(res);
-    };
-    func();
-  }, []);
-  if (!profile) return null;
-
+function ProfilePage() {
   return (
     <div>
-      <h1 className="text-4xl mt-6 border-b-2">Profile</h1>
-      <div
-        className="mt-4 [&>h1]:text-2xl [&>h2]:text-xl"
-        dangerouslySetInnerHTML={{ __html: profile.detail }}
-      ></div>
+      <Profile></Profile>
     </div>
   );
 }
 
-export default Profile;
+export default ProfilePage;

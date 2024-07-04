@@ -5,8 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Image from "next/image";
-import { GetRequestOptions } from "@/type";
-import { client } from "@/libs/client";
+import { GetRequestOptions, PaintingList } from "@/type";
 
 function Gallery() {
   const [movieList, setMovieList] = useState<any[]>([]);
@@ -14,8 +13,9 @@ function Gallery() {
 
   useEffect(() => {
     const func = async () => {
-      const res = await client.get({ endpoint: "painting_list" });
-      setPaintingList(res?.contents);
+      const res = await fetch("/api/painting/list");
+      const data: PaintingList = await res.json();
+      setPaintingList(data?.contents);
     };
     func();
   }, []);
@@ -25,15 +25,9 @@ function Gallery() {
       method: "GET",
       redirect: "follow",
     };
-    const youtubeURL = process.env.NEXT_PUBLIC_YOUTUBE_URL;
-    const youtubeAPIKey = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
-    const youtubePlaylistID = process.env.NEXT_PUBLIC_PLAYLIST_ID;
 
     const func = async () => {
-      const res = await fetch(
-        `${youtubeURL}/playlistItems?part=contentDetails,id,snippet,status&playlistId=${youtubePlaylistID}&key=${youtubeAPIKey}&maxResults=10`,
-        requestOptions
-      );
+      const res = await fetch(`/api/movie/list`, requestOptions);
       const data = await res.json();
       setMovieList(data.items);
     };
@@ -63,14 +57,6 @@ function Gallery() {
                   <h2 className="text-xl mt-4">{painting.title}</h2>
                 </Link>
               </div>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html:
-                    painting.description.length > 20
-                      ? `${painting.description.substring(0, 20)}.....`
-                      : painting.description,
-                }}
-              ></div>
             </div>
           );
         })}
@@ -93,13 +79,8 @@ function Gallery() {
               </div>
               <div>
                 <Link href={`/movie/${movie.contentDetails.videoId}`}>
-                  <h2 className="text-xl mt-4">{movie.snippet.title}</h2>
+                  <h2 className="text-xl mt-2">{movie.snippet.title}</h2>
                 </Link>
-              </div>
-              <div>
-                {movie.snippet.description.length > 20
-                  ? `${movie.snippet.description.substring(0, 20)}.....`
-                  : movie.snippet.description}
               </div>
             </div>
           );
