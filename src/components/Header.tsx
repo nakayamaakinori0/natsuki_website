@@ -1,6 +1,5 @@
 import React from "react";
 import Navigation from "./Navigation";
-import LanguageSelect from "./LanguageSelect";
 import Link from "next/link";
 
 function Header() {
