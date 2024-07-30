@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className={"min-h-screen"}>
       <Carousel></Carousel>
-      <NewsList></NewsList>
+      <NewsList limit={3}></NewsList>
       <PaintingSlider></PaintingSlider>
       <MovieSlider></MovieSlider>
       <Profile></Profile>
