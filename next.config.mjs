@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     domains: ["images.microcms-assets.io", "i.ytimg.com"],
   },
+  experimental: {
+    scrollRestoration: true,
+  },
 };
 
 export default nextConfig;

@@ -2,17 +2,13 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { ProfileType } from "@/type";
 import Link from "next/link";
+import fetcher from "@/libs/fetcher";
+import useSWR from "swr";
 
 function Profile() {
-  const [profile, setProfile] = useState<any>({});
-  useEffect(() => {
-    const func = async () => {
-      const res = await fetch("/api/profile");
-      const data: ProfileType = await res.json();
-      setProfile(data);
-    };
-    func();
-  }, []);
+  const res = useSWR("/api/profile", fetcher);
+  const profile: ProfileType = res.data;
+
   if (!profile) return null;
 
   return (

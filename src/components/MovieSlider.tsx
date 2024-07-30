@@ -7,24 +7,14 @@ import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import { GetRequestOptions } from "@/type";
+import fetcher from "@/libs/fetcher";
+import useSWR from "swr";
 
 function MovieSlider() {
-  const [movieList, setMovieList] = useState<any[]>([]);
+  const res = useSWR("/api/movie/list", fetcher);
+  const movieList: any[] = res.data?.items;
 
-  useEffect(() => {
-    const requestOptions: GetRequestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
-
-    const func = async () => {
-      const res = await fetch(`/api/movie/list`, requestOptions);
-      const data = await res.json();
-      setMovieList(data.items);
-    };
-    func();
-  }, []);
+  if (!movieList) return <div>Loading...</div>;
 
   return (
     <div>

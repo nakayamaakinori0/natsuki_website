@@ -3,23 +3,18 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dayjs from "@/libs/day";
-import { NewsListType } from "@/type";
+import { News } from "@/type";
 import { NewsListProps } from "@/type";
+import useSWR from "swr";
+import fetcher from "@/libs/fetcher";
 
 function NewsList(props: NewsListProps) {
   const { limit } = props;
-  const [newsList, setNewsList] = useState<any[]>([]);
-
-  useEffect(() => {
-    const func = async () => {
-      const res = await fetch("/api/news/list");
-      const data: NewsListType = await res.json();
-      setNewsList(data?.contents);
-    };
-    func();
-  }, []);
+  const res = useSWR("/api/news/list", fetcher);
+  const newsList: News[] = res.data?.contents;
 
   if (!newsList) return null;
+
   return (
     <div>
       <div className="flex border-b-2">

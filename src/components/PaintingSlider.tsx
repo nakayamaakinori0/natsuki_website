@@ -7,19 +7,13 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { PaintingList } from "@/type";
+import { PaintingType } from "@/type";
+import fetcher from "@/libs/fetcher";
+import useSWR from "swr";
 
 function PaintingSlider() {
-  const [paintingList, setPaintingList] = useState<any[]>([]);
-
-  useEffect(() => {
-    const func = async () => {
-      const res = await fetch("/api/painting/list");
-      const data: PaintingList = await res.json();
-      setPaintingList(data?.contents);
-    };
-    func();
-  }, []);
+  const res = useSWR("/api/painting/list", fetcher);
+  const paintingList: PaintingType[] = res.data?.contents;
 
   if (!paintingList) return <div>Loading...</div>;
 
