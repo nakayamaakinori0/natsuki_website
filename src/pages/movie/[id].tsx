@@ -34,9 +34,9 @@ function Movie() {
       </div>
       <div>
         {movie && (
-          <div>
-            <h1>{movie.snippet.title}</h1>
-            <p>{movie.snippet.description}</p>
+          <div className="px-5">
+            <h1 className="mt-2 text-2xl">{movie.snippet.title}</h1>
+            <p className="mt-2">{movie.snippet.description}</p>
           </div>
         )}
       </div>
