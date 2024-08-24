@@ -7,6 +7,7 @@ import YoutubePlayer from "@/components/YoutubePlayer";
 
 function Movie() {
   const [movie, setMovie] = useState<PlaylistItem>();
+  console.log("movie", movie);
   const router: NextRouter = useRouter();
   const movieId: string = router.query.id as string;
 
@@ -18,7 +19,7 @@ function Movie() {
     };
 
     const func = async () => {
-      const res = await fetch(`/api/movie/list`, requestOptions);
+      const res = await fetch(`/api/movie/${movieId}`, requestOptions);
       const data: PlaylistItems = await res.json();
       setMovie(data.items[0]);
     };
