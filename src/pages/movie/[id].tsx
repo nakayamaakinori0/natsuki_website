@@ -7,7 +7,6 @@ import YoutubePlayer from "@/components/YoutubePlayer";
 
 function Movie() {
   const [movie, setMovie] = useState<PlaylistItem>();
-  console.log("movie", movie);
   const router: NextRouter = useRouter();
   const movieId: string = router.query.id as string;
 

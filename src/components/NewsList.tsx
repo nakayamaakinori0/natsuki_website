@@ -27,20 +27,23 @@ function NewsList(props: NewsListProps) {
           if (index < limit) {
             return (
               <li key={content.id} className="px-10 border-b mt-4 pb-4">
-                {content?.head_image?.url && (
-                  <div className="flex">
-                    <Link href={`/news/${content.id}`}>
+                <div className="flex">
+                  <Link href={`/news/${content.id}`}>
+                    <div className="relative w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] xl:w-[300px] xl:h-[300px]">
                       <Image
-                        src={content.head_image.url}
-                        width={400}
-                        height={400}
+                        src={
+                          content?.head_image?.url
+                            ? content.head_image.url
+                            : "/NoImage.png"
+                        }
+                        fill
+                        style={{ objectFit: "cover" }}
                         alt="news_head_image"
-                        className="mt-2 hover:opacity-80"
+                        className="hover:opacity-80"
                       ></Image>
-                    </Link>
-                  </div>
-                )}
-
+                    </div>
+                  </Link>
+                </div>
                 <div className="flex">
                   <Link href={`/news/${content.id}`}>
                     <h2 className="text-xl hover:text-accent">
@@ -53,7 +56,6 @@ function NewsList(props: NewsListProps) {
                     {dayjs(content.createdAt).format("YYYY/MM/DD")}
                   </div>
                 )}
-
                 {content?.caption && (
                   <div className="flex">
                     <div className="mt-2">
