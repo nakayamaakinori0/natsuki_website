@@ -1,9 +1,14 @@
 import Link from "next/link";
 import NewsList from "@/components/NewsList";
-export default function RecentNewsList({ limit }) {
+
+type RecentNewsListProps = {
+  limit: number;
+};
+
+export default function RecentNewsList({ limit }: RecentNewsListProps) {
   return (
     <div>
-      <NewsList limit={3}></NewsList>
+      <NewsList limit={limit}></NewsList>
       <div className={"flex justify-end pr-5"}>
         <Link href={"/news"}>
           <div className={" text-2xl hover:text-accent"}>... more</div>
