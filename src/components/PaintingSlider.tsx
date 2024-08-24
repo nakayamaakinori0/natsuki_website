@@ -7,39 +7,34 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { PaintingList } from "@/type";
+import { PaintingType } from "@/type";
+import fetcher from "@/libs/fetcher";
+import useSWR from "swr";
 
 function PaintingSlider() {
-  const [paintingList, setPaintingList] = useState<any[]>([]);
-
-  useEffect(() => {
-    const func = async () => {
-      const res = await fetch("/api/painting/list");
-      const data: PaintingList = await res.json();
-      setPaintingList(data?.contents);
-    };
-    func();
-  }, []);
+  const res = useSWR("/api/painting/list", fetcher);
+  const paintingList: PaintingType[] = res.data?.contents;
 
   if (!paintingList) return <div>Loading...</div>;
 
   return (
     <div className="mt-20">
-      <Link href={"gallery/"}>
-        <h1 className="text-4xl mt-6 border-b-2">PaintingSlider</h1>
-      </Link>
+      <div className="flex border-b-2">
+        <Link href={"gallery/"}>
+          <h1 className="pl-5 text-4xl mt-6 hover:text-accent">Painting</h1>
+        </Link>
+      </div>
       <div
         className="
             [&_.swiper-button-prev]:text-secondary
             [&_.swiper-button-next]:text-secondary
-            [&_.swiper-pagination-bullet-active]:!bg-secondary"
+            "
       >
         <Swiper
           spaceBetween={15}
           slidesPerView={2}
           modules={[Navigation, Pagination]}
           navigation
-          pagination={{ clickable: true }}
           breakpoints={{
             500: { slidesPerView: 2 },
             800: { slidesPerView: 3 },
@@ -50,20 +45,27 @@ function PaintingSlider() {
           {paintingList.map((content) => {
             return (
               <SwiperSlide key={content.id}>
-                <Link href={`/painting/${content.id}`}>
-                  <div className="sm:w-[300px] sm:h-[300px] xl:w-[400px] xl:h-[400px]">
-                    <Image
-                      className="mt-2"
-                      src={content.image.url}
-                      fill
-                      style={{ objectFit: "contain" }}
-                      alt="painting"
-                    ></Image>
-                  </div>
-                </Link>
-                <Link href={`/painting/${content.id}`}>
-                  <h2 className="text-xl mt-4">{content.title}</h2>
-                </Link>
+                <div className="flex">
+                  <Link href={`/painting/${content.id}`}>
+                    <div className="relative w-[100px] h-[100px] sm:w-[200px] sm:h-[200px] xl:w-[300px] xl:h-[300px]">
+                      <Image
+                        src={content.image.url}
+                        fill
+                        style={{ objectFit: "contain" }}
+                        alt="painting"
+                        className="mt-2 hover:opacity-80"
+                      ></Image>
+                    </div>
+                  </Link>
+                </div>
+
+                <div className="flex">
+                  <Link href={`/painting/${content.id}`}>
+                    <h2 className="text-xl mt-4 hover:text-accent">
+                      {content.title}
+                    </h2>
+                  </Link>
+                </div>
               </SwiperSlide>
             );
           })}

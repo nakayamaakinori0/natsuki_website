@@ -18,7 +18,7 @@ function Movie() {
     };
 
     const func = async () => {
-      const res = await fetch(`/api/movie/list`, requestOptions);
+      const res = await fetch(`/api/movie/${movieId}`, requestOptions);
       const data: PlaylistItems = await res.json();
       setMovie(data.items[0]);
     };

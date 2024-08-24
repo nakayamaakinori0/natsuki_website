@@ -19,7 +19,7 @@ export default class YoutubeAPI {
         redirect: "follow",
       };
       const res = await fetch(
-        `${this.baseUrl}/playlistItems?part=contentDetails,id,snippet,status&playlistId=${this.playlistId}&key=${this.apiKey}&maxResults=10`,
+        `${this.baseUrl}/playlistItems?part=contentDetails,id,snippet,status&playlistId=${this.playlistId}&key=${this.apiKey}&maxResults=50`,
         requestOptions
       );
       const data = await res.json();

@@ -27,7 +27,7 @@ export default class MicrocmsAPI {
     try {
       const res = await this.client.get({
         endpoint: "painting_list",
-        queries: { draftKey: "", fields: "", depth: 1 },
+        queries: { draftKey: "", fields: "", depth: 1, offset: 0, limit: 100 },
       });
       return res;
     } catch (error) {
@@ -48,12 +48,11 @@ export default class MicrocmsAPI {
       throw error;
     }
   }
-
   async getNewsList(): Promise<NewsListType> {
     try {
       const res = await this.client.get({
         endpoint: "news_list",
-        queries: { draftKey: "", fields: "", depth: 1 },
+        queries: { draftKey: "", fields: "", depth: 1, offset: 0, limit: 100 },
       });
       return res;
     } catch (error) {

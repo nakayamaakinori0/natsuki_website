@@ -13,7 +13,7 @@ function Carousel() {
       className="[&_.swiper]:h-lvh
         [&_.swiper-button-prev]:text-secondary
         [&_.swiper-button-next]:text-secondary
-        [&_.swiper-pagination-bullet-active]:!bg-secondary"
+        [&_.swiper-pagination-bullet]:bg-secondary"
     >
       <Swiper
         loop={true}

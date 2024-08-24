@@ -43,25 +43,29 @@ function Gallery() {
 
   return (
     <div>
-      <h1 className="text-4xl mt-6 border-b-2">Painting</h1>
-      <div className="grid grid-cols-3 gap-4">
+      <h1 className="pl-5 text-4xl mt-6 border-b-2">Painting</h1>
+      <div className="px-10 grid grid-cols-3 gap-4">
         {paintingList.map((painting) => {
           return (
             <div key={painting.id}>
               <div>
                 <Link href={`/painting/${painting.id}`}>
-                  <Image
-                    className="mt-2"
-                    src={painting.image.url}
-                    width={300}
-                    height={300}
-                    alt="painting"
-                  ></Image>
+                  <div className="relative w-[100px] h-[100px] sm:w-[200px] sm:h-[200px] xl:w-[300px] xl:h-[300px]">
+                    <Image
+                      className="mt-2 hover:opacity-80"
+                      src={painting.image.url}
+                      fill
+                      style={{ objectFit: "contain" }}
+                      alt="painting"
+                    ></Image>
+                  </div>
                 </Link>
               </div>
-              <div>
+              <div className="flex">
                 <Link href={`/painting/${painting.id}`}>
-                  <h2 className="text-xl mt-4">{painting.title}</h2>
+                  <h2 className="text-xl mt-4 hover:text-accent">
+                    {painting.title}
+                  </h2>
                 </Link>
               </div>
             </div>
@@ -76,17 +80,19 @@ function Gallery() {
               <div>
                 <Link href={`/movie/${movie.contentDetails.videoId}`}>
                   <Image
-                    className="mt-2"
+                    className="mt-2 hover:opacity-80"
                     src={movie.snippet.thumbnails.standard.url}
-                    width={300}
-                    height={300}
+                    width={movie.snippet.thumbnails.standard.width}
+                    height={movie.snippet.thumbnails.standard.height}
                     alt="painting"
                   ></Image>
                 </Link>
               </div>
               <div>
                 <Link href={`/movie/${movie.contentDetails.videoId}`}>
-                  <h2 className="text-xl mt-2">{movie.snippet.title}</h2>
+                  <h2 className="text-xl mt-2 hover:text-accent">
+                    {movie.snippet.title}
+                  </h2>
                 </Link>
               </div>
             </div>

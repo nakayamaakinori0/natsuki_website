@@ -7,42 +7,33 @@ import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import { GetRequestOptions } from "@/type";
+import fetcher from "@/libs/fetcher";
+import useSWR from "swr";
 
 function MovieSlider() {
-  const [movieList, setMovieList] = useState<any[]>([]);
+  const res = useSWR("/api/movie/list", fetcher);
+  const movieList: any[] = res.data?.items;
 
-  useEffect(() => {
-    const requestOptions: GetRequestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
-
-    const func = async () => {
-      const res = await fetch(`/api/movie/list`, requestOptions);
-      const data = await res.json();
-      setMovieList(data.items);
-    };
-    func();
-  }, []);
+  if (!movieList) return <div>Loading...</div>;
 
   return (
     <div>
-      <Link href={"/gallery"}>
-        <h1 className="text-4xl mt-6 border-b-2">MovieSlider</h1>
-      </Link>
+      <div className="flex border-b-2">
+        <Link href={"/gallery"}>
+          <h1 className="pl-5 text-4xl mt-6 hover:text-accent">Movie</h1>
+        </Link>
+      </div>
       <div
         className="
             [&_.swiper-button-prev]:text-secondary
             [&_.swiper-button-next]:text-secondary
-            [&_.swiper-pagination-bullet-active]:!bg-secondary"
+            "
       >
         <Swiper
           spaceBetween={15}
           slidesPerView={2}
           modules={[Navigation, Pagination]}
           navigation
-          pagination={{ clickable: true }}
           breakpoints={{
             500: { slidesPerView: 3 },
             800: { slidesPerView: 4 },
@@ -53,18 +44,24 @@ function MovieSlider() {
           {movieList.map((movie) => {
             return (
               <SwiperSlide key={movie.id}>
-                <Link href={`/movie/${movie.contentDetails.videoId}`}>
-                  <Image
-                    className=""
-                    src={movie.snippet.thumbnails.standard.url}
-                    width={320}
-                    height={180}
-                    alt="movie"
-                  ></Image>
-                </Link>
-                <Link href={`/movie/${movie.contentDetails.videoId}`}>
-                  <h2 className="text-xl ">{movie.snippet.title}</h2>
-                </Link>
+                <div className="flex">
+                  <Link href={`/movie/${movie.contentDetails.videoId}`}>
+                    <Image
+                      src={movie.snippet.thumbnails.standard.url}
+                      width={movie.snippet.thumbnails.standard.width}
+                      height={movie.snippet.thumbnails.standard.height}
+                      alt="movie"
+                      className="hover:opacity-80"
+                    ></Image>
+                  </Link>
+                </div>
+                <div className="flex">
+                  <Link href={`/movie/${movie.contentDetails.videoId}`}>
+                    <h2 className="text-xl hover:text-accent">
+                      {movie.snippet.title}
+                    </h2>
+                  </Link>
+                </div>
               </SwiperSlide>
             );
           })}

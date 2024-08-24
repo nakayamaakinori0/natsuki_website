@@ -4,7 +4,7 @@ import NewsList from "@/components/NewsList";
 function News() {
   return (
     <div>
-      <NewsList></NewsList>
+      <NewsList limit={1000}></NewsList>
     </div>
   );
 }

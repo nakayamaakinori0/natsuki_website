@@ -153,3 +153,7 @@ export type Localized = {
   title: string;
   description: string;
 };
+
+export type NewsListProps = {
+  limit: number;
+};
