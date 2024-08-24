@@ -57,6 +57,7 @@ function YoutubePlayer({ movieId }: Props) {
   }, [playerOptions, playerRef]);
 
   const initializePlayer = useCallback(() => {
+    console.log("initializePlayer");
     if (playerRef.current) {
       playerRef.current.destroy();
       window.onYouTubeIframeAPIReady = null;
@@ -66,6 +67,7 @@ function YoutubePlayer({ movieId }: Props) {
   }, [loadYoutubeAPI, playerRef]);
 
   const calculatePlayerSize = () => {
+    // スマホのブラウザの検索窓の表示可否でresizeイベントが発火し、プレイヤーが再生成されてしまうので、幅に変更があったときだけ、dimensionsを更新する
     const newWidth = window.innerWidth < 1100 ? window.innerWidth : 1100;
     const newHeight = newWidth * (9 / 16);
     setDimensions({ width: newWidth, height: newHeight });
@@ -81,11 +83,7 @@ function YoutubePlayer({ movieId }: Props) {
   //  calculate player size
   useEffect(() => {
     if (!window) return;
-    window.addEventListener("resize", calculatePlayerSize);
     calculatePlayerSize();
-    return () => {
-      window.removeEventListener("resize", calculatePlayerSize);
-    };
   }, []);
 
   // set player size
