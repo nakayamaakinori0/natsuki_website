@@ -157,3 +157,11 @@ export type Localized = {
 export type NewsListProps = {
   limit: number;
 };
+
+export type MetaType = {
+  title?: string;
+  titleTemplate?: string;
+  description?: string;
+  ogType?: string;
+  imgUrl?: string;
+};

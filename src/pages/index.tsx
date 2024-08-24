@@ -3,15 +3,26 @@ import RecentNewsList from "@/components/RecentNewsList";
 import PaintingSlider from "@/components/PaintingSlider";
 import MovieSlider from "@/components/MovieSlider";
 import Profile from "@/components/Profile";
+import SEOHead from "@/components/SEOHead";
 
 export default function Home() {
+  const pageOgImg: string = `${process.env.NEXT_PUBLIC_SITE_URL}`;
   return (
-    <main className={"min-h-screen"}>
-      <Carousel></Carousel>
-      <RecentNewsList limit={3}></RecentNewsList>
-      <PaintingSlider></PaintingSlider>
-      <MovieSlider></MovieSlider>
-      <Profile></Profile>
-    </main>
+    <>
+      <SEOHead
+        title={"Top"}
+        titleTemplate={"Art Gallery"}
+        description={"NATSUKI NAKAYAMA Art Gallery Home Page "}
+        ogType={"website"}
+        imgUrl={`${pageOgImg}/while_painting.jpg`}
+      ></SEOHead>
+      <main className={"min-h-screen"}>
+        <Carousel></Carousel>
+        <RecentNewsList limit={3}></RecentNewsList>
+        <PaintingSlider></PaintingSlider>
+        <MovieSlider></MovieSlider>
+        <Profile></Profile>
+      </main>
+    </>
   );
 }
