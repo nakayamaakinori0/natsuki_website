@@ -5,7 +5,7 @@ export default class YoutubeAPI {
   apiKey: string | undefined;
   playlistId: string | undefined;
   constructor() {
-    this.baseUrl = process.env.YOUTUBE_URL;
+    this.baseUrl = process.env.YOUTUBE_API_URL;
     this.apiKey = process.env.YOUTUBE_API_KEY;
     this.playlistId = process.env.PLAYLIST_ID;
     if (!this.baseUrl || !this.apiKey || !this.playlistId) {
