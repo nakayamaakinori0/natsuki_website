@@ -12,7 +12,9 @@ export default function Home() {
       <SEOHead
         title={"Top"}
         titleTemplate={"Art Gallery"}
-        description={"NATSUKI NAKAYAMA Art Gallery Home Page "}
+        description={
+          "NATSUKI NAKAYAMA Art Gallery Home Page, 中山夏希の作品や最近の活動が閲覧できるウェブサイト"
+        }
         ogType={"website"}
         imgUrl={`${pageOgImg}/while_painting.jpg`}
       ></SEOHead>
