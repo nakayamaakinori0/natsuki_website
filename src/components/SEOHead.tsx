@@ -16,16 +16,21 @@ export default function SEOHead({
   return (
     <Head>
       <meta name="viewport" content={"width=device-width, initial-scale=1"} />
-      <title>{siteTitle}</title>
+      <meta charSet="utf-8" />
+
       <link href={url} rel="canonical" />
-      <meta name="twitter:card" content={"summary_large_image"} />
-      <meta property="og:image" content={imgUrl} />
-      <meta property="og:title" content={siteTitle} />
-      <meta property="og:url" content={url} />
+      <title>{siteTitle}</title>
       <meta name="description" content={description} />
+      <meta name="twitter:card" content={"summary_large_image"} />
+      <link rel="icon" type="image/svg+xml" href={"/samplelogo.svg"} />
+
+      <meta property="og:title" content={siteTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content={ogType} />
-      <link rel="icon" type="image/svg+xml" href={"/samplelogo.svg"} />
+      <meta property="og:url" content={url} />
+      <meta property="og:image" content={imgUrl} />
+      <meta property="og:site_name" content="サイト名" />
+      <meta property="og:locale" content="ja_JP" />
     </Head>
   );
 }
