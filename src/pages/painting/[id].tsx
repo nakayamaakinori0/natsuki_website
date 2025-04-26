@@ -21,15 +21,17 @@ function Painting() {
 
   return (
     <div>
-      <div>
+      <div className="mt-6 flex justify-center flex-col items-center">
         <Image
           src={painting.image.url}
           width={400}
           height={400}
           alt="painting"
         ></Image>
-        <h1>{painting.title}</h1>
-        <pre>{painting.description}</pre>
+      </div>
+      <div className="px-5">
+        <h1 className="mt-2 text-2xl">{painting.title}</h1>
+        <pre className="mt-2">{painting.description}</pre>
       </div>
     </div>
   );
