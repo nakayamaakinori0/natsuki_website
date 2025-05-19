@@ -39,7 +39,7 @@ function NewsDetail() {
         </div>
       )}
       <article
-        className="prose prose-invert mt-6 pl-10"
+        className="prose prose-invert mt-6 px-10 max-w-full overflow-wrap break-words"
         dangerouslySetInnerHTML={{ __html: news.body }}
       ></article>
     </div>
