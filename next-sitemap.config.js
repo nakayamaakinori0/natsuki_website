@@ -1,4 +1,4 @@
 module.exports = {
-  siteUrl: "https://natsuki-website-ty0n8qqcd-aknorinoris-projects.vercel.app",
+  siteUrl: "https://natsuki-website.vercel.app",
   generateRobotsTxt: true,
 };

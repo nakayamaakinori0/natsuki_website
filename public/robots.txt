@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://natsuki-website-ty0n8qqcd-aknorinoris-projects.vercel.app
+Host: https://natsuki-website.vercel.app
 
 # Sitemaps
-Sitemap: https://natsuki-website-ty0n8qqcd-aknorinoris-projects.vercel.app/sitemap.xml
+Sitemap: https://natsuki-website.vercel.app/sitemap.xml
